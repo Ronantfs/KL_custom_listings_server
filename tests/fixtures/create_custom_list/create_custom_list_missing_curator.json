@@ -1,0 +1,7 @@
+{
+  "handler": "create_custom_list",
+  "list_name": "Best of 2026",
+  "list_caption": "A curated selection of the best films of 2026",
+  "start_date": "2026-01-01",
+  "end_date": "2026-12-31"
+}
