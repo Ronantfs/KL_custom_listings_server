@@ -1,0 +1,177 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "0 — Get curators",
+      "type": "python",
+      "request": "launch",
+      "module": "handlers.custom_lists.entrypoint",
+      "args": [
+        "--handler",
+        "get_curators",
+        "--payload",
+        "{}"
+      ],
+      "env": { "GITHUB_ACTIONS": "false" },
+      "justMyCode": false,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "1 — Get custom lists for curator",
+      "type": "python",
+      "request": "launch",
+      "module": "handlers.custom_lists.entrypoint",
+      "args": [
+        "--handler",
+        "get_custom_lists",
+        "--payload",
+        "{\"curator\":\"${input:curatorSelection}\"}"
+      ],
+      "env": { "GITHUB_ACTIONS": "false" },
+      "justMyCode": false,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "2 — Create custom list",
+      "type": "python",
+      "request": "launch",
+      "module": "handlers.custom_lists.entrypoint",
+      "args": [
+        "--handler",
+        "create_custom_list",
+        "--payload",
+        "{\"curator\":\"${input:curatorSelection}\",\"list_name\":\"${input:listName}\",\"list_caption\":\"A curated selection of films\",\"start_date\":\"2026-01-01\",\"end_date\":\"2026-12-31\"}"
+      ],
+      "env": { "GITHUB_ACTIONS": "false" },
+      "justMyCode": false,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "3 — Assign films to list",
+      "type": "python",
+      "request": "launch",
+      "module": "handlers.custom_lists.entrypoint",
+      "args": [
+        "--handler",
+        "assign_films_to_list",
+        "--payload",
+        "{\"curator\":\"${input:curatorSelection}\",\"list_name\":\"${input:listName}\",\"db_ids\":[${input:dbIds}]}"
+      ],
+      "env": { "GITHUB_ACTIONS": "false" },
+      "justMyCode": false,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "3.2 — Remove film from list",
+      "type": "python",
+      "request": "launch",
+      "module": "handlers.custom_lists.entrypoint",
+      "args": [
+        "--handler",
+        "remove_film_from_list",
+        "--payload",
+        "{\"curator\":\"${input:curatorSelection}\",\"list_name\":\"${input:listName}\",\"db_id\":${input:singleDbId}}"
+      ],
+      "env": { "GITHUB_ACTIONS": "false" },
+      "justMyCode": false,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "3.3 — Update list film caption",
+      "type": "python",
+      "request": "launch",
+      "module": "handlers.custom_lists.entrypoint",
+      "args": [
+        "--handler",
+        "update_list_film_caption",
+        "--payload",
+        "{\"curator\":\"${input:curatorSelection}\",\"list_name\":\"${input:listName}\",\"db_id\":${input:singleDbId},\"new_caption\":\"${input:caption}\"}"
+      ],
+      "env": { "GITHUB_ACTIONS": "false" },
+      "justMyCode": false,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "4 — Update list info",
+      "type": "python",
+      "request": "launch",
+      "module": "handlers.custom_lists.entrypoint",
+      "args": [
+        "--handler",
+        "update_list",
+        "--payload",
+        "{\"curator\":\"${input:curatorSelection}\",\"list_name\":\"${input:listName}\",\"updates\":{\"list_caption\":\"${input:caption}\"}}"
+      ],
+      "env": { "GITHUB_ACTIONS": "false" },
+      "justMyCode": false,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "5 — Delete list",
+      "type": "python",
+      "request": "launch",
+      "module": "handlers.custom_lists.entrypoint",
+      "args": [
+        "--handler",
+        "delete_list",
+        "--payload",
+        "{\"curator\":\"${input:curatorSelection}\",\"list_name\":\"${input:listName}\"}"
+      ],
+      "env": { "GITHUB_ACTIONS": "false" },
+      "justMyCode": false,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Pytest — Current file",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": ["${file}", "-v"],
+      "justMyCode": false,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "TEST — Get kinologue lists (HTTP)",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/local_testing/test_get_kinologue_lists.py",
+      "justMyCode": false,
+      "console": "integratedTerminal"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "curatorSelection",
+      "type": "pickString",
+      "description": "Select a curator",
+      "options": [
+        "kinologue"
+      ],
+      "default": "kinologue"
+    },
+    {
+      "id": "listName",
+      "type": "promptString",
+      "description": "Enter the list name",
+      "default": "Best of 2026"
+    },
+    {
+      "id": "dbIds",
+      "type": "promptString",
+      "description": "Enter db_ids (comma-separated, e.g. 12345, 67890)",
+      "default": "12345"
+    },
+    {
+      "id": "singleDbId",
+      "type": "promptString",
+      "description": "Enter a single db_id",
+      "default": "12345"
+    },
+    {
+      "id": "caption",
+      "type": "promptString",
+      "description": "Enter caption text",
+      "default": "A curated selection of films"
+    }
+  ]
+}
