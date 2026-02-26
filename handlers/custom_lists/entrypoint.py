@@ -28,13 +28,6 @@ HANDLER_REGISTRY = {
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-CORS_HEADERS = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "OPTIONS,POST",
-    "Access-Control-Allow-Headers": "Content-Type",
-}
-
-
 def _normalize_event(event: Dict[str, Any]) -> Dict[str, Any]:
     if "body" in event and isinstance(event["body"], str):
         return json.loads(event["body"])
@@ -43,14 +36,6 @@ def _normalize_event(event: Dict[str, Any]) -> Dict[str, Any]:
 
 def handler(event: Dict[str, Any], context=None) -> Dict[str, Any]:
     logger.info("Entrypoint start event_keys=%s", sorted(event.keys()))
-
-    # --- handle CORS preflight ---
-    if event.get("requestContext", {}).get("http", {}).get("method") == "OPTIONS":
-        return {
-            "statusCode": 204,
-            "headers": CORS_HEADERS,
-            "body": "",
-        }
 
     payload = _normalize_event(event)
 
@@ -69,7 +54,6 @@ def handler(event: Dict[str, Any], context=None) -> Dict[str, Any]:
         "statusCode": 200,
         "headers": {
             "Content-Type": "application/json",
-            **CORS_HEADERS,
         },
         "body": json.dumps(result),
     }

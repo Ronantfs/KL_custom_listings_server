@@ -9,7 +9,7 @@ then stores that data (plus empty caption) in the list.
 import logging
 from typing import Dict, Any, List
 
-from KL_custom_listings_server.build.lib.core.types.film_listings import PanCinemaCleanedCompactedListings
+from core.types.film_listings import PanCinemaCleanedCompactedListings
 from core.s3 import get_s3_client, download_json_from_s3, upload_dict_to_s3
 from config import (
     S3_BUCKET,
