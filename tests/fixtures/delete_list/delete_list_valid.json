@@ -1,0 +1,5 @@
+{
+  "handler": "delete_list",
+  "curator": "TEST_CURATOR",
+  "list_name": "E2E Delete Test List"
+}

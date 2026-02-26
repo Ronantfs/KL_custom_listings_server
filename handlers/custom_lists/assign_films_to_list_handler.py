@@ -9,6 +9,7 @@ then stores that data (plus empty caption) in the list.
 import logging
 from typing import Dict, Any, List
 
+from KL_custom_listings_server.build.lib.core.types.film_listings import PanCinemaCleanedCompactedListings
 from core.s3 import get_s3_client, download_json_from_s3, upload_dict_to_s3
 from config import (
     S3_BUCKET,
@@ -48,7 +49,7 @@ def assign_films_to_list_handler(event: Dict[str, Any], context=None) -> Dict[st
         raise ValueError(f"List '{list_name}' not found for curator '{curator}'")
 
     # Load pan cinema listings
-    pan_listings = download_json_from_s3(s3, S3_BUCKET, PAN_CINEMA_LISTINGS_KEY)
+    pan_listings: PanCinemaCleanedCompactedListings = download_json_from_s3(s3, S3_BUCKET, PAN_CINEMA_LISTINGS_KEY)
 
     # Already-assigned db_ids (avoid duplicates)
     existing_db_ids = {film["db_id"] for film in target_list["list_films"]}

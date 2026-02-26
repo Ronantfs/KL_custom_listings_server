@@ -11,9 +11,11 @@ from handlers.custom_lists.remove_film_from_list_handler import remove_film_from
 from handlers.custom_lists.update_list_film_caption_handler import update_list_film_caption_handler
 from handlers.custom_lists.update_list_handler import update_list_handler
 from handlers.custom_lists.delete_list_handler import delete_list_handler
+from handlers.custom_lists.create_curator_handler import create_curator_handler
 
 HANDLER_REGISTRY = {
     "get_curators": get_curators_handler,
+    "create_curator": create_curator_handler,
     "get_custom_lists": get_custom_lists_handler,
     "create_custom_list": create_custom_list_handler,
     "assign_films_to_list": assign_films_to_list_handler,

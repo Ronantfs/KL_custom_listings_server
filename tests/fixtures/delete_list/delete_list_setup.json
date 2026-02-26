@@ -1,0 +1,8 @@
+{
+  "handler": "create_custom_list",
+  "curator": "TEST_CURATOR",
+  "list_name": "E2E Delete Test List",
+  "list_caption": "List created for delete e2e test",
+  "start_date": "2026-01-01",
+  "end_date": "2026-12-31"
+}
