@@ -1,0 +1,4 @@
+{
+  "handler": "create_curator",
+  "curator": "e2e_test_curator_tmp"
+}
