@@ -26,7 +26,7 @@ rm -rf "$OUT_DIR" "$BUILD_DIR"
 mkdir -p "$BUILD_DIR" "$OUT_DIR"
 
 echo "Installing dependencies"
-python3 -m pip install . \
+uv pip install . \
   --target "$BUILD_DIR"
 
 echo "Copying handlers"
