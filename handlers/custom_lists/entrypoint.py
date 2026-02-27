@@ -12,6 +12,7 @@ from handlers.custom_lists.update_list_film_caption_handler import update_list_f
 from handlers.custom_lists.update_list_handler import update_list_handler
 from handlers.custom_lists.delete_list_handler import delete_list_handler
 from handlers.custom_lists.create_curator_handler import create_curator_handler
+from handlers.custom_lists.get_available_films_handler import get_available_films_handler
 
 HANDLER_REGISTRY = {
     "get_curators": get_curators_handler,
@@ -23,6 +24,7 @@ HANDLER_REGISTRY = {
     "update_list_film_caption": update_list_film_caption_handler,
     "update_list": update_list_handler,
     "delete_list": delete_list_handler,
+    "get_available_films": get_available_films_handler,
 }
 
 logger = logging.getLogger(__name__)

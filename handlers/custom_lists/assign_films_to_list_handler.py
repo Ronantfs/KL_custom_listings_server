@@ -7,9 +7,10 @@ then stores that data (plus empty caption) in the list.
 """
 
 import logging
-from typing import Dict, Any, List
+from typing import Dict, Any, List, cast
 
 from core.types.film_listings import PanCinemaCleanedCompactedListings
+from core.types.custom_lists import CuratorFilmLists, ListFilm, validate_curator_film_lists
 from core.s3 import get_s3_client, download_json_from_s3, upload_dict_to_s3
 from config import (
     S3_BUCKET,
@@ -36,7 +37,8 @@ def assign_films_to_list_handler(event: Dict[str, Any], context=None) -> Dict[st
 
     # Load curator's lists
     lists_key = f"{FILM_LISTS_BASE_PREFIX}/{curator}/{FILM_LISTS_FILENAME}"
-    film_lists = download_json_from_s3(s3, S3_BUCKET, lists_key)
+    raw = download_json_from_s3(s3, S3_BUCKET, lists_key)
+    film_lists: CuratorFilmLists = validate_curator_film_lists(raw, curator)
 
     # Find target list
     target_list = None
@@ -71,11 +73,11 @@ def assign_films_to_list_handler(event: Dict[str, Any], context=None) -> Dict[st
 
         cinema_listings = pan_listings[str_id]
 
-        list_film = {
+        list_film = cast(ListFilm, {
             "db_id": db_id,
             "cinema_listings": cinema_listings,
             "list_film_caption": "",
-        }
+        })
 
         target_list["list_films"].append(list_film)
         existing_db_ids.add(db_id)

@@ -10,6 +10,7 @@ import re
 from typing import Dict, Any
 
 from core.s3 import get_s3_client, download_json_from_s3, upload_dict_to_s3
+from core.types.custom_lists import CuratorFilmLists, validate_curator_film_lists
 from config import S3_BUCKET, FILM_LISTS_BASE_PREFIX, FILM_LISTS_FILENAME
 
 logger = logging.getLogger(__name__)
@@ -44,7 +45,8 @@ def update_list_handler(event: Dict[str, Any], context=None) -> Dict[str, Any]:
 
     s3 = get_s3_client()
     lists_key = f"{FILM_LISTS_BASE_PREFIX}/{curator}/{FILM_LISTS_FILENAME}"
-    film_lists = download_json_from_s3(s3, S3_BUCKET, lists_key)
+    raw = download_json_from_s3(s3, S3_BUCKET, lists_key)
+    film_lists: CuratorFilmLists = validate_curator_film_lists(raw, curator)
 
     # Find target list
     target_list = None
