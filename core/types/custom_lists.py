@@ -9,7 +9,7 @@ Each curator's filmLists.json is a list of CustomList objects.
 
 import logging
 
-from typing import Any, List, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict
 
 from core.types.film_listings import CleanMatchedFilmsCinemaListings
 
@@ -29,6 +29,20 @@ class CustomList(TypedDict):
     start_date: str   # YYYY-MM-DD
     end_date: str     # YYYY-MM-DD
     list_films: List[ListFilm]
+
+
+class CinemaShowing(TypedDict):
+    date: str           # YYYY-MM-DD
+    showtimes: List[str]  # HH:MM
+
+
+class AvailableFilmSummary(TypedDict):
+    title: str
+    directors: List[str]
+    year: Optional[int]
+    cinema_count: int
+    cinemas: List[str]
+    cinema_showings: Dict[str, List[CinemaShowing]]
 
 
 # The content of each curator's filmLists.json file
